@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eo pipefail
 
 #good revision, we consider current one as bad?
 REVISION=""
@@ -41,7 +42,7 @@ do
 		#NOTE: this can happen if commits are half assed.
 		return 1
 	fi
-	
+
 	#TEST
 	#bash -x ./integration-tests.sh -DallTests -fae -Dtest=$TEST
 	#TODO: XXX is this good?
