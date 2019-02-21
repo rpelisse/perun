@@ -2,19 +2,20 @@
 set -eo pipefail
 
 #good revision, we consider current one as bad?
-REVISION=""
+readonly REVISION=${1}
 #url of diff file containig testsuite diff from EAP root. This has to be addition only diff, since revision jumping might affect testsuite.
-TEST_DIFF=""
+readonly TEST_DIFF=${2}
 #test to run from suite, either existing one or one that comes from $TEST_DIFF
-TEST="*.Test"
+readonly TEST=${TEST:-"*.Test" }
+readonly DIFF_FILE=${4:-'test.diff'}
 
-if [ ! -z $TEST_DIFF ]; then
-    wget $TEST_DIFF -O test.diff
+if [ -n "${TEST_DIFF}" ]; then
+    wget "${TEST_DIFF}" -O "${DIFF_FILE}"
 	if [ $? -ne 0 ]; then
 		echo "GIT-BISECT: Failed to retrieve test diff."
 		return 1
 	else
-		patch -p 1 -i test.diff
+		patch -p 1 -i "${DIFF_FILE}"
 		if [ $? -ne 0 ]; then
 			echo "GIT-BISECT: Failed to patch repository with supplied diff."
 			return 1
@@ -25,11 +26,11 @@ if [ ! -z $TEST_DIFF ]; then
 
 fi
 
-git bisect start
-git bisect bad
-git bisect good $REVISION
+git bisect 'start'
+git bisect 'bad'
+git bisect 'good' "${REVISION}"
 
-BLAME_REVISION=""
+readonly BLAME_REVISION=${BLAME_REVISION}
 
 while [ -z $BLAME_REVISION ]
 do
