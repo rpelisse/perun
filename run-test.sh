@@ -1,8 +1,8 @@
 #!/bin/bash
 set -eo pipefail
 
-readonly REPRODUCER_PATCH=${REPRODUCER_PATCH}
-readonly TEST=${TEST_NAME}}
+readonly REPRODUCER_PATCH="${REPRODUCER_PATCH}"
+readonly TEST="${TEST_NAME}}"
 
 set -u
 echo "${REPRODUCER_PATCH}"
