@@ -23,6 +23,8 @@ readonly REPRODUCER_PATCH=${PATCH_HOME:-$(mktemp)}
 curl "${REPRODUCER_PATCH_URL}" -o "${REPRODUCER_PATCH}"
 if [ ! -e "${REPRODUCER_PATCH}" ]; then
   export REPRODUCER_PATCH
+else
+	echo "No reproducer patch!"
 fi
 
 git bisect 'start'
