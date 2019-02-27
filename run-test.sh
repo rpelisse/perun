@@ -5,8 +5,8 @@ readonly REPRODUCER_PATCH=${REPRODUCER_PATCH}
 readonly TEST=${TEST_NAME}}
 
 set -u
-
-patch -p1 -i ${REPRODUCER_PATCH}
+echo "patch -p1 -i ${REPRODUCER_PATCH}"
+patch -p1 -i "${REPRODUCER_PATCH}"
 # TODO if patch fails, we need to skip test and print a message that the test is not compatible with the revision skipped
 
 if [ -z "${TEST}" ]; then
