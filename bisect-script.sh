@@ -1,6 +1,10 @@
 #!/bin/bash
 set -eo pipefail
 
+usage() {
+  echo "$(basename "${0}")"
+}
+
 readonly GITHUB_REPO="${GITHUB_REPO:-'git@github.com:jbossas/jboss-eap7.git'}"
 readonly GITHUB_BRANCH="${GITHUB_BRANCH:-'7.2.x-proposed'}"
 readonly BISECT_WORKSPACE="${BISECT_WORKSPACE:-$(mktemp -d)}"
