@@ -28,4 +28,4 @@ git bisect 'start'
 git bisect 'bad' "${BAD_REVISION}"
 git bisect 'good' "${GOOD_REVISION}"
 
-git bisect run ./run-test.sh
+git bisect run ${WORKSPACE}/run-test.sh
