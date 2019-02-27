@@ -12,7 +12,7 @@ readonly BISECT_WORKSPACE="${BISECT_WORKSPACE:-$(mktemp -d)}"
 deleteBisectWorkspac() {
   rm -rf "${BISECT_WORKSPACE}"
 }
-trap finish EXIT
+trap deleteBisectWorkspac EXIT
 
 
 #git clone "${GITHUB_REPO}"  --single-branch --branch "${GITHUB_BRANCH}" "${BISECT_WORKSPACE}"
