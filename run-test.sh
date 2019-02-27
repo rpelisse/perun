@@ -2,7 +2,7 @@
 set -eo pipefail
 
 readonly REPRODUCER_PATCH=${REPRODUCER_PATCH}
-readonly TEST=${TEST}}
+readonly TEST=${TEST_NAME}}
 
 set -u
 
