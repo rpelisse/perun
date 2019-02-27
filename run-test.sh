@@ -5,6 +5,7 @@ readonly REPRODUCER_PATCH="${REPRODUCER_PATCH}"
 readonly TEST="${TEST_NAME}}"
 
 set -u
+echo "${TEST}"
 echo "${REPRODUCER_PATCH}"
 echo "patch -p1 -i ${REPRODUCER_PATCH}"
 patch -p1 -i "${REPRODUCER_PATCH}"
