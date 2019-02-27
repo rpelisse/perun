@@ -6,10 +6,10 @@ readonly TEST="${TEST_NAME}}"
 
 set -u
 if [ -e "${REPRODUCER_PATCH}" ]; then
-	echo "Patching ...."
-	patch -p1 -i "${REPRODUCER_PATCH}"
+  echo "Patching ...."
+  patch -p1 -i "${REPRODUCER_PATCH}"
 else
-	echo "No patch file provided, skipping"
+  echo "No patch file provided, skipping"
 fi
 
 # TODO if patch fails, we need to skip test and print a message that the test is not compatible with the revision skipped
@@ -33,6 +33,6 @@ export MAVEN_OPTS="-X"
 /opt/jboss-set-ci-scripts/harmonia-eap-build 'testsuite'
 
 if [ -e "${REPRODUCER_PATCH}" ]; then
-	echo -n 'Cleaning up after patch ...'
-patch -p1 -i "${REPRODUCER_PATCH}" -R
+  echo -n 'Cleaning up after patch ...'
+  patch -p1 -i "${REPRODUCER_PATCH}" -R
 fi
