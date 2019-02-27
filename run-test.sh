@@ -29,6 +29,7 @@ echo 'Done.'
 
 echo -n 'Running testsuite ...'
 export TESTSUITE_OPTS="-Dtest=$TEST"
+export MAVEN_OPTS="-X"
 /opt/jboss-set-ci-scripts/harmonia-eap-build 'testsuite'
 
 if [ -e "${REPRODUCER_PATCH}" ]; then
