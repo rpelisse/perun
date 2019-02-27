@@ -2,10 +2,10 @@
 set -eo pipefail
 
 readonly GITHUB_REPO=${GITHUB_REPO:-'git@github.com:jbossas/jboss-eap7.git'}
-readonly GITHUB_BRANCH=${GIT_BRANCH:-'7.2.x-proposed'}
+readonly GITHUB_BRANCH=${GITHUB_BRANCH:-'7.2.x-proposed'}
 readonly BISECT_WORKSPACE=${BISECT_WORKSPACE:-$(mktemp -d)}
 
-git clone "${GITHUB_REPO}"  --single-branch --branch "${GITHUB_BRANCH}" "${BISET_WORKSPACE}"
+git clone "${GITHUB_REPO}"  --single-branch --branch "${GITHUB_BRANCH}" "${BISECT_WORKSPACE}"
 cd "${BISECT_WORKSPACE}"
 
 #good revision, we consider current one as bad?
