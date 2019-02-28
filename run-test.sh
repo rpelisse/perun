@@ -2,7 +2,7 @@
 set -eo pipefail
 
 readonly REPRODUCER_PATCH="${REPRODUCER_PATCH}"
-readonly TEST="${TEST_NAME}}"
+readonly TEST="${TEST_NAME}"
 
 set -u
 if [ -e "${REPRODUCER_PATCH}" ]; then
