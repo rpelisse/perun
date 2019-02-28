@@ -22,7 +22,7 @@ fi
 
 echo -n 'Building ...'
 
-export TESTSUITE_OPTS="-DskipTests"
+export BUILD_OPTS="-DskipTests"
 /opt/jboss-set-ci-scripts/harmonia-eap-build
 
 echo 'Done.'
