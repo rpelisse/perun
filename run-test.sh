@@ -30,8 +30,9 @@ echo 'Done.'
 echo -n 'Running testsuite ...'
 export TESTSUITE_OPTS="-Dtest=$TEST"
 export MAVEN_OPTS="-X"
+date +%Y%m%d:%H:%M:%S:%N
 /opt/jboss-set-ci-scripts/harmonia-eap-build 'testsuite'
-
+date +%Y%m%d:%H:%M:%S:%N
 if [ -e "${REPRODUCER_PATCH}" ]; then
   echo -n 'Cleaning up after patch ...'
   patch -p1 -i "${REPRODUCER_PATCH}" -R
