@@ -11,6 +11,7 @@ readonly BISECT_WORKSPACE="${BISECT_WORKSPACE:-$(mktemp -d)}"
 
 deleteBisectWorkspac() {
   rm -rf "${BISECT_WORKSPACE}"
+  #rm -rf "${REPRODUCER_PATCH}"
 }
 trap deleteBisectWorkspac EXIT
 
