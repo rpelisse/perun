@@ -32,16 +32,16 @@ fi
 echo -n 'Building ...'
 
 export BUILD_OPTS="-DskipTests"
-/opt/jboss-set-ci-scripts/harmonia-eap-build
+bash -x /opt/jboss-set-ci-scripts/harmonia-eap-build
 
 echo 'Done.'
 
 echo -n 'Running testsuite ...'
 export TESTSUITE_OPTS="-Dtest=$TEST"
 export MAVEN_OPTS="-X"
-echo "XXX: Start testsuite"
+echo "PERUN: Start testsuite"
 date +%Y%m%d:%H:%M:%S:%N
-/opt/jboss-set-ci-scripts/harmonia-eap-build 'testsuite'
-echo "XXX: Stop testsuite"
+bash -x /opt/jboss-set-ci-scripts/harmonia-eap-build 'testsuite'
+echo "PERUN: Stop testsuite"
 date +%Y%m%d:%H:%M:%S:%N
 
