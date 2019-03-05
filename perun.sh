@@ -23,6 +23,8 @@ cd "${BISECT_WORKSPACE}"
 #good revision, we consider current one as bad?
 readonly GOOD_REVISION="${GOOD_REVISION}"
 readonly BAD_REVISION="${BAD_REVISION}"
+#revisions that are known to not compile due to split of changes
+readonly CORRUPT_REVISIONS="${CORRUPT_REVISIONS}"
 #url of a patch file (a diff) containing the changes required to insert
 # the reproducer into EAP existing testsuite.
 readonly REPRODUCER_PATCH_URL="${REPRODUCER_PATCH_URL}"
@@ -35,7 +37,7 @@ curl "${REPRODUCER_PATCH_URL}" -o "${REPRODUCER_PATCH}"
 if [ -e "${REPRODUCER_PATCH}" ]; then
   export REPRODUCER_PATCH
 else
-	echo -n "[PERUN]: No reproducer patch"
+	echo "[PERUN]: No reproducer patch"
 	#return 1
 fi
 
