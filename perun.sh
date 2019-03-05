@@ -11,7 +11,7 @@ readonly BISECT_WORKSPACE="${BISECT_WORKSPACE:-$(mktemp -d)}"
 
 deleteBisectWorkspac() {
   rm -rf "${BISECT_WORKSPACE}"
-  #rm -rf "${REPRODUCER_PATCH}"
+  rm -rf "${REPRODUCER_PATCH}"
 }
 trap deleteBisectWorkspac EXIT
 
@@ -35,7 +35,7 @@ curl "${REPRODUCER_PATCH_URL}" -o "${REPRODUCER_PATCH}"
 if [ -e "${REPRODUCER_PATCH}" ]; then
   export REPRODUCER_PATCH
 else
-	echo "No reproducer patch"
+	echo -n "[PERUN]: No reproducer patch"
 	#return 1
 fi
 
