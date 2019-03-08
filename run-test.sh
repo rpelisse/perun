@@ -44,7 +44,7 @@ echo '[PERUN]: Done.'
 
 echo'[PERUN]: Running testsuite ...'
 export TESTSUITE_OPTS="-Dtest=$TEST"
-export MAVEN_OPTS="-X"
+export MAVEN_ARGS="-X"
 echo "[PERUN]: Start testsuite"
 date +%Y%m%d:%H:%M:%S:%N
 bash -x /opt/jboss-set-ci-scripts/harmonia-eap-build 'testsuite'
