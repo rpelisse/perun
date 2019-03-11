@@ -5,6 +5,7 @@ cleanPatch() {
 if [ -e "${REPRODUCER_PATCH}" ]; then
   echo '[PERUN]: Cleaning up after patch ...'
   patch -p1 -i "${REPRODUCER_PATCH}" -R
+  patch -p1 -i "${INTEGRATION_SH_PATCH}" -R
 fi
 }
 
@@ -20,11 +21,20 @@ if [[ $CORRUPT_REVISIONS == *"${CURRENT_REVISION}"* ]]; then
   exit 125
 fi
 set -u
+
+if [ -e "${INTEGRATION_SH_PATCH}" ]; then
+  echo "[PERUN]: Patching integration script...."
+  patch -p1 -i "${INTEGRATION_SH_PATCH}"
+else
+  echo "[PERUN]: No integration.sh patch file provided, skipping"
+  exit 1
+fi
+
 if [ -e "${REPRODUCER_PATCH}" ]; then
-  echo "[PERUN]: Patching ...."
+  echo "[PERUN]: Patching tests...."
   patch -p1 -i "${REPRODUCER_PATCH}"
 else
-  echo "[PERUN]: No patch file provided, skipping"
+  echo "[PERUN]: No tests patch file provided, skipping"
 fi
 
 # TODO if patch fails, we need to skip test and print a message that the test is not compatible with the revision skipped

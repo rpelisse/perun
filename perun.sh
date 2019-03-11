@@ -12,6 +12,7 @@ readonly BISECT_WORKSPACE="${BISECT_WORKSPACE:-$(mktemp -d)}"
 deleteBisectWorkspac() {
   rm -rf "${BISECT_WORKSPACE}"
   rm -rf "${REPRODUCER_PATCH}"
+  rm -rf "${INTEGRATION_SH_PATCH}"
 }
 trap deleteBisectWorkspac EXIT
 
@@ -39,6 +40,15 @@ if [ -e "${REPRODUCER_PATCH}" ]; then
 else
 	echo "[PERUN]: No reproducer patch"
 	#return 1
+fi
+
+readonly INTEGRATION_SH_PATCH=${INTEGRATION_SH_HOME:-$(mktemp)}
+curl "${INTEGRATION_SH_PATCH_URL}" -o "${INTEGRATION_SH_PATCH}"
+if [ -e "${INTEGRATION_SH_PATCH}" ]; then
+  export INTEGRATION_SH_PATCH
+else
+	echo "[PERUN]: No integration sh patch"
+	return 1
 fi
 
 git bisect 'start'
