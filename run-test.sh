@@ -52,7 +52,7 @@ bash -x /opt/jboss-set-ci-scripts/harmonia-eap-build
 
 echo '[PERUN]: Done.'
 
-echo'[PERUN]: Running testsuite ...'
+echo '[PERUN]: Running testsuite ...'
 export TESTSUITE_OPTS="-Dtest=$TEST"
 export MAVEN_ARGS="-X"
 echo "[PERUN]: Start testsuite"
