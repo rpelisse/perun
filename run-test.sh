@@ -13,6 +13,7 @@ trap cleanPatch EXIT
 
 readonly REPRODUCER_PATCH="${REPRODUCER_PATCH}"
 readonly TEST="${TEST_NAME}"
+readonly HARMONIA_SCRIPT="${HARMONIA_SCRIPT:-'/opt/jboss-set-ci-scripts/harmonia-eap-build'}"
 
 readonly CURRENT_REVISION=$(git rev-parse HEAD)
 if [[ $CORRUPT_REVISIONS == *"${CURRENT_REVISION}"* ]]; then
@@ -48,16 +49,12 @@ fi
 echo '[PERUN]: Building ...'
 
 export BUILD_OPTS="-DskipTests"
-bash -x /opt/jboss-set-ci-scripts/harmonia-eap-build
+bash -x ${HARMONIA_SCRIPT}
 
 echo '[PERUN]: Done.'
 
 echo '[PERUN]: Running testsuite ...'
 export TESTSUITE_OPTS="-Dtest=$TEST"
-export MAVEN_ARGS="-X"
 echo "[PERUN]: Start testsuite"
-date +%Y%m%d:%H:%M:%S:%N
-bash -x /opt/jboss-set-ci-scripts/harmonia-eap-build 'testsuite'
+bash -x ${HARMONIA_SCRIPT} 'testsuite'
 echo "[PERUN]: Stop testsuite"
-date +%Y%m%d:%H:%M:%S:%N
-
