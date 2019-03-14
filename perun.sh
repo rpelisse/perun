@@ -20,8 +20,7 @@ readonly GITHUB_BRANCH="${GITHUB_BRANCH:-'7.2.x-proposed'}"
 readonly BISECT_WORKSPACE="${BISECT_WORKSPACE:-$(mktemp -d)}"
 
 deleteBisectWorkspac() {
-  tree "${BISECT_WORKSPACE}"
-  
+
   rm -rf "${BISECT_WORKSPACE}"
   rm -rf "${REPRODUCER_PATCH}"
   rm -rf "${INTEGRATION_SH_PATCH}"
