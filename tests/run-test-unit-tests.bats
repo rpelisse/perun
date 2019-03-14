@@ -18,6 +18,7 @@ deleteIfExist() {
 
 setup() {
   export BISECT_WORKSPACE=$(mktemp -d)
+  export HARMONIA_SCRIPT='/opt/jboss-set-ci-scripts/harmonia-eap-build'
 }
 
 teardown() {
@@ -27,6 +28,6 @@ teardown() {
 @test "Missing HARMONIA_SCRIPT" {
   run ${RUN_TEST}
   [ "${status}" -eq 1 ]
-  [[ ${output} == "${PERUN_LOG_PREFIX} Invalid path to Harmonia script provided: . Aborting." ]]
+  [[ ${output} == "${PERUN_LOG_PREFIX} Invalid path to Harmonia script provided: ${HARMONIA_SCRIPT}. Aborting." ]]
 }
 
