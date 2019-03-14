@@ -20,6 +20,8 @@ readonly GITHUB_BRANCH="${GITHUB_BRANCH:-'7.2.x-proposed'}"
 readonly BISECT_WORKSPACE="${BISECT_WORKSPACE:-$(mktemp -d)}"
 
 deleteBisectWorkspac() {
+  tree "${BISECT_WORKSPACE}"
+  
   rm -rf "${BISECT_WORKSPACE}"
   rm -rf "${REPRODUCER_PATCH}"
   rm -rf "${INTEGRATION_SH_PATCH}"
@@ -42,7 +44,7 @@ fi
 git clone "${GITHUB_REPO}"  --branch "${GITHUB_BRANCH}" "${BISECT_WORKSPACE}"
 cd "${BISECT_WORKSPACE}"
 
-#revisions that are known to not compile due to split of changes
+#revisions that are known to not compile due to split of changes, separated by ','
 readonly CORRUPT_REVISIONS="${CORRUPT_REVISIONS}"
 #url of a patch file (a diff) containing the changes required to insert
 # the reproducer into EAP existing testsuite.
@@ -52,8 +54,8 @@ if [ -z "${REPRODUCER_PATCH_URL}" ]; then
   exit 3
 fi
 #test to run from suite, either existing one or one that comes from $TEST_DIFF
-readonly TEST_NAME="${TEST_NAME:-"*.*TestCase"}"
-if [ -n "${TEST_NAME}" ]; then
+readonly TEST_NAME="${TEST_NAME}"
+if [ -z "${TEST_NAME}" ]; then
   log "No test name provided, aborting."
   exit 4
 fi

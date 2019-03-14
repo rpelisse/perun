@@ -25,19 +25,19 @@ if [ "${?}" -ne 0 ]; then
 fi
 set -e
 
+
+readonly PERUN_LOG_PREFIX=${PERUN_LOG_PREFIX:-'[PERUN]'}
+readonly GIT_SKIP_BISECT_ERROR_CODE=${GIT_SKIP_BISECT_ERROR_CODE:-'125'}
+readonly REPRODUCER_PATCH="${REPRODUCER_PATCH}"
+readonly TEST="${TEST_NAME}"
+readonly HARMONIA_SCRIPT="${HARMONIA_SCRIPT:-'/opt/jboss-set-ci-scripts/harmonia-eap-build'}"
+readonly CURRENT_REVISION=$(git rev-parse HEAD)
+
 if [ ! -e "${HARMONIA_SCRIPT}" ]; then
   log "Invalid path to Harmonia script provided: ${HARMONIA_SCRIPT}. Aborting."
   exit 1
 fi
 
-readonly PERUN_LOG_PREFIX=${PERUN_LOG_PREFIX:-'[PERUN]'}
-readonly GIT_SKIP_BISECT_ERROR_CODE=${GIT_SKIP_BISECT_ERROR_CODE:-'125'}
-
-readonly REPRODUCER_PATCH="${REPRODUCER_PATCH}"
-readonly TEST="${TEST_NAME}"
-readonly HARMONIA_SCRIPT="${HARMONIA_SCRIPT:-'/opt/jboss-set-ci-scripts/harmonia-eap-build'}"
-
-readonly CURRENT_REVISION=$(git rev-parse HEAD)
 if [[ $CORRUPT_REVISIONS == *"${CURRENT_REVISION}"* ]]; then
   log "Current revision \"${CURRENT_REVISION}\" is in corrupt list, skipping."
   exit "${GIT_SKIP_BISECT_ERROR_CODE}"
