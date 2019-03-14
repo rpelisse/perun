@@ -29,7 +29,7 @@ set -e
 readonly PERUN_LOG_PREFIX=${PERUN_LOG_PREFIX:-'[PERUN]'}
 readonly GIT_SKIP_BISECT_ERROR_CODE=${GIT_SKIP_BISECT_ERROR_CODE:-'125'}
 readonly REPRODUCER_PATCH="${REPRODUCER_PATCH}"
-readonly TEST="${TEST_NAME}"
+readonly TEST_NAME="${TEST_NAME}"
 readonly HARMONIA_SCRIPT="${HARMONIA_SCRIPT:-'/opt/jboss-set-ci-scripts/harmonia-eap-build'}"
 readonly CURRENT_REVISION=$(git rev-parse HEAD)
 
@@ -62,8 +62,8 @@ fi
 
 # TODO if patch fails, we need to skip test and print a message that the test is not compatible with the revision skipped
 
-if [ -z "${TEST}" ]; then
-  log "No TEST provided."
+if [ -z "${TEST_NAME}" ]; then
+  log "No TEST_NAME provided."
   exit 1
 fi
 
@@ -75,7 +75,7 @@ bash -x ${HARMONIA_SCRIPT}
 log "Done."
 
 log "Running testsuite ..."
-export TESTSUITE_OPTS="${TESTSUITE_OPTS} -Dtest=${TEST}"
+export TESTSUITE_OPTS="${TESTSUITE_OPTS} -Dtest=${TEST_NAME}"
 log "Start testsuite"
 bash -x ${HARMONIA_SCRIPT} 'testsuite'
 log "Stop testsuite"
