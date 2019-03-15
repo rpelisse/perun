@@ -68,14 +68,19 @@ if [ -z "${TEST_NAME}" ]; then
 fi
 
 log "Building ..."
-
-export BUILD_OPTS=${BUILD_OPTS:"-DskipTests"}
+#TODO: determine why conditional substitution does not work
+#set +u
+#export BUILD_OPTS=${BUILD_OPTS:'-DskipTests'}
+#set -u
+export BUILD_OPTS="-DskipTests"
 bash -x ${HARMONIA_SCRIPT}
 
 log "Done."
 
 log "Running testsuite ..."
+set +u
 export TESTSUITE_OPTS="${TESTSUITE_OPTS} -Dtest=${TEST_NAME}"
+set -u
 log "Start testsuite"
 bash -x ${HARMONIA_SCRIPT} 'testsuite'
 log "Stop testsuite"

@@ -19,13 +19,18 @@ readonly GITHUB_REPO="${GITHUB_REPO:-'git@github.com:jbossas/jboss-eap7.git'}"
 readonly GITHUB_BRANCH="${GITHUB_BRANCH:-'7.2.x-proposed'}"
 readonly BISECT_WORKSPACE="${BISECT_WORKSPACE:-$(mktemp -d)}"
 
-deleteBisectWorkspac() {
-
-  rm -rf "${BISECT_WORKSPACE}"
-  rm -rf "${REPRODUCER_PATCH}"
-  rm -rf "${INTEGRATION_SH_PATCH}"
+deleteBisectWorkspace() {
+  if [[ ! -z "${BISECT_WORKSPACE}" ]]; then
+    rm -rf "${BISECT_WORKSPACE}"
+  fi
+  if [[ ! -z "${REPRODUCER_PATCH}" ]]; then
+    rm -rf "${REPRODUCER_PATCH}"
+  fi
+  if [[ ! -z "${INTEGRATION_SH_PATCH}" ]]; then
+    rm -rf "${INTEGRATION_SH_PATCH}"
+  fi
 }
-trap deleteBisectWorkspac EXIT
+trap deleteBisectWorkspace EXIT
 
 
 #good revision, we consider current one as bad?
