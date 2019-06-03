@@ -5,6 +5,10 @@ cleanPatch() {
   if [ -e "${REPRODUCER_PATCH}" ]; then
     echo '[PERUN]: Cleaning up after patch ...'
     patch -p1 -i "${REPRODUCER_PATCH}" -R
+  fi
+  
+  if [ -e "${INTEGRATION_SH_PATCH}" ]; then
+    echo '[PERUN]: Cleaning up after patch ...'
     patch -p1 -i "${INTEGRATION_SH_PATCH}" -R
   fi
 }
@@ -53,15 +57,6 @@ else
   exit 1
 fi
 
-if [ -e "${REPRODUCER_PATCH}" ]; then
-  log "Patching tests...."
-  patch -p1 -i "${REPRODUCER_PATCH}"
-else
-  log "No tests patch file provided, skipping"
-fi
-
-# TODO if patch fails, we need to skip test and print a message that the test is not compatible with the revision skipped
-
 if [ -z "${TEST_NAME}" ]; then
   log "No TEST_NAME provided."
   exit 1
@@ -81,6 +76,16 @@ log "Running testsuite ..."
 set +u
 export TESTSUITE_OPTS="${TESTSUITE_OPTS} -Dtest=${TEST_NAME}"
 set -u
+
+
+if [ -e "${REPRODUCER_PATCH}" ]; then
+  log "Patching tests...."
+  patch -p1 -i "${REPRODUCER_PATCH}"
+else
+  log "No tests patch file provided, skipping"
+fi
+
+# TODO if patch fails, we need to skip test and print a message that the test is not compatible with the revision skipped
 log "Start testsuite"
 bash -x ${HARMONIA_SCRIPT} 'testsuite'
 log "Stop testsuite"
