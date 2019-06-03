@@ -15,9 +15,14 @@ log() {
 readonly PERUN_LOG_PREFIX=${PERUN_LOG_PREFIX:-'[PERUN]'}
 export PERUN_LOG_PREFIX
 
-readonly GITHUB_REPO="${GITHUB_REPO:-'git@github.com:jbossas/jboss-eap7.git'}"
-readonly GITHUB_BRANCH="${GITHUB_BRANCH:-'7.2.x-proposed'}"
+readonly EAP_GITHUB_REPO="${EAP_GITHUB_REPO:-'git@github.com:jbossas/jboss-eap7.git'}"
+readonly EAP_GITHUB_BRANCH="${EAP_GITHUB_BRANCH:-'7.2.x-proposed'}"
 readonly BISECT_WORKSPACE="${BISECT_WORKSPACE:-$(mktemp -d)}"
+# export to reuse
+export BISECT_WORKSPACE
+#for EAT and harmonia build script
+readonly LOCAL_REPO_DIR=${LOCAL_REPO_DIR:-${WORKSPACE}/maven-local-repository}
+export LOCAL_REPO_DIR
 
 deleteBisectWorkspace() {
   if [[ ! -z "${BISECT_WORKSPACE}" ]]; then
@@ -45,7 +50,7 @@ if [ -z "${BAD_REVISION}" ]; then
   exit 2
 fi
 
-git clone "${GITHUB_REPO}"  --branch "${GITHUB_BRANCH}" "${BISECT_WORKSPACE}"
+git clone "${EAP_GITHUB_REPO}"  --branch "${EAP_GITHUB_BRANCH}" "${BISECT_WORKSPACE}"
 cd "${BISECT_WORKSPACE}"
 
 #revisions that are known to not compile due to split of changes, separated by ','
@@ -80,7 +85,6 @@ if [ -e "${INTEGRATION_SH_PATCH}" ]; then
   export INTEGRATION_SH_PATCH
 else
   log "No integration sh patch"
-  return 1
 fi
 
 git bisect 'start'
