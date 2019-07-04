@@ -58,6 +58,8 @@ readonly CORRUPT_REVISIONS="${CORRUPT_REVISIONS}"
 #url of a patch file (a diff) containing the changes required to insert
 # the reproducer into EAP existing testsuite.
 readonly REPRODUCER_PATCH_URL="${REPRODUCER_PATCH_URL}"
+readonly GIT_TOKEN="${GIT_TOKEN}"
+readonly GIT_UID="${GIT_UID}"
 if [ -z "${REPRODUCER_PATCH_URL}" ]; then
   log "No URL for the reproducer patch provided, aborting."
   exit 3
@@ -72,7 +74,21 @@ fi
 set -u
 
 readonly REPRODUCER_PATCH=${PATCH_HOME:-$(mktemp)}
-curl "${REPRODUCER_PATCH_URL}" -o "${REPRODUCER_PATCH}"
+if [[ -n "${GIT_TOKEN}" && -n "${GIT_UID}" && "${REPRODUCER_PATCH_URL}" == *"api.github.com/repos"* ]]; then
+  log "Fetching PR as unified diff from '${REPRODUCER_PATCH_URL}'"
+  #check if we can access
+  GIT_ACCESS_RETURN_CODE=$(curl -u "${GIT_UID}:${GIT_TOKEN}" -H "Accept: application/vnd.github.v3.diff" -o /dev/null -w '%{http_code}\n' -s -LI "${REPRODUCER_PATCH_URL}")
+
+  if [ "${GIT_ACCESS_RETURN_CODE}" == "200" ]; then
+    curl -u "${GIT_UID}:${GIT_TOKEN}" -H "Accept: application/vnd.github.v3.diff" -o "${REPRODUCER_PATCH}" "${REPRODUCER_PATCH_URL}"
+  else
+    log "Could not access reproducer patch, return code '${GIT_ACCESS_RETURN_CODE}'"
+    exit 5
+  fi
+else
+  curl "${REPRODUCER_PATCH_URL}" -o "${REPRODUCER_PATCH}"
+fi
+
 if [ -e "${REPRODUCER_PATCH}" ]; then
   export REPRODUCER_PATCH
 else
