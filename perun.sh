@@ -99,13 +99,14 @@ else
 fi
 
 readonly INTEGRATION_SH_PATCH=${INTEGRATION_SH_HOME:-$(mktemp)}
-curl "${INTEGRATION_SH_PATCH_URL}" -o "${INTEGRATION_SH_PATCH}"
-if [ -e "${INTEGRATION_SH_PATCH}" ]; then
-  export INTEGRATION_SH_PATCH
-else
-  log "No integration sh patch"
+if [ -z "INTEGRATION_SH_PATCH_URL" ]; then
+   curl "${INTEGRATION_SH_PATCH_URL}" -o "${INTEGRATION_SH_PATCH}"
+   if [ -e "${INTEGRATION_SH_PATCH}" ]; then
+     export INTEGRATION_SH_PATCH
+   else
+     log "No integration sh patch"
+   fi
 fi
-
 git bisect 'start'
 git bisect 'bad' "${BAD_REVISION}"
 git bisect 'good' "${GOOD_REVISION}"
