@@ -60,10 +60,10 @@ readonly CORRUPT_REVISIONS="${CORRUPT_REVISIONS}"
 readonly REPRODUCER_PATCH_URL="${REPRODUCER_PATCH_URL}"
 readonly GIT_TOKEN="${GIT_TOKEN}"
 readonly GIT_UID="${GIT_UID}"
-if [ -z "${REPRODUCER_PATCH_URL}" ]; then
-  log "No URL for the reproducer patch provided, aborting."
-  exit 3
-fi
+#if [ -z "${REPRODUCER_PATCH_URL}" ]; then
+#  log "No URL for the reproducer patch provided, aborting."
+#  exit 3
+#fi
 #test to run from suite, either existing one or one that comes from $TEST_DIFF
 readonly TEST_NAME="${TEST_NAME}"
 if [ -z "${TEST_NAME}" ]; then
@@ -85,8 +85,11 @@ if [[ -n "${GIT_TOKEN}" && -n "${GIT_UID}" && "${REPRODUCER_PATCH_URL}" == *"api
     log "Could not access reproducer patch, return code '${GIT_ACCESS_RETURN_CODE}'"
     exit 5
   fi
-else
+
+elif [ -n "${REPRODUCER_PATCH_URL}" ]; then
   curl "${REPRODUCER_PATCH_URL}" -o "${REPRODUCER_PATCH}"
+else
+    log "No reproducer patch URL provided"
 fi
 
 if [ -e "${REPRODUCER_PATCH}" ]; then
