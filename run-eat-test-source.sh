@@ -1,5 +1,5 @@
 #!/bin/bash
-#NOTE: this is not ideal, it will checkout EAT each time, but for now it will do, plus its thunder, let it 
+#NOTE: this is not ideal, it will checkout EAT each time, but for now it will do, plus its thunder, let it
 #fry those drives and RAM
 set -eo pipefail
 log() {
@@ -50,7 +50,7 @@ git clone "${EAT_GITHUB_REPO}"  --branch "${EAT_GITHUB_BRANCH}" "${EAT_WORKSPACE
 cd "${EAT_WORKSPACE}"
 
 export OTHER_MAVEN_ARGS="-Dversion.org.wildfly.openssl.wildfly-openssl-macosx-x86_64=1.0.6.Final-redhat-2 -Dtest=${TEST_NAME}"
-bash -x ./run-eat.sh "${EAT_MODE}" 
+bash -x ./harmonia/eat-job.sh "${EAT_MODE}"
 #JOB_RESULT=$?
 log "Stop EAT testsuite"
 #return $JOB_RESULT
