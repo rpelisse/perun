@@ -49,8 +49,9 @@ log "Start EAT testsuite"
 git clone "${EAT_GITHUB_REPO}"  --branch "${EAT_GITHUB_BRANCH}" "${EAT_WORKSPACE}"
 cd "${EAT_WORKSPACE}"
 
-export OTHER_MAVEN_ARGS="-Dversion.org.wildfly.openssl.wildfly-openssl-macosx-x86_64=1.0.6.Final-redhat-2 -Dtest=${TEST_NAME}"
-bash -x ./run-eat.sh "${EAT_MODE}" 
-#JOB_RESULT=$?
+export EAT_EXTRA_OPTS="-Dversion.org.wildfly.openssl.wildfly-openssl-macosx-x86_64=1.0.6.Final-redhat-2 -Dtest=${TEST_NAME}"
+export HARMONIA_BUILD_SCRIPT="${HARMONIA_FOLDER}/eat-job.sh"
+
+bash -x ${HARMONIA_SCRIPT} "${EAT_MODE}" 
 log "Stop EAT testsuite"
-#return $JOB_RESULT
+

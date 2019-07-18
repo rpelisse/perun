@@ -20,6 +20,7 @@ readonly EAP_GITHUB_BRANCH="${EAP_GITHUB_BRANCH:-'7.2.x-proposed'}"
 readonly BISECT_WORKSPACE="${BISECT_WORKSPACE:-$(mktemp -d)}"
 # export to reuse
 export BISECT_WORKSPACE
+export HARMONIA_FOLDER="${WORKSPACE}/harmonia"
 #for EAT and harmonia build script
 readonly LOCAL_REPO_DIR=${LOCAL_REPO_DIR:-${WORKSPACE}/maven-local-repository}
 export LOCAL_REPO_DIR
@@ -98,8 +99,9 @@ else
   log 'No reproducer patch'
 fi
 
+set +u
 readonly INTEGRATION_SH_PATCH=${INTEGRATION_SH_HOME:-$(mktemp)}
-if [ ! -z "${INTEGRATION_SH_PATCH_URL}" ]; then
+if [ -n "${INTEGRATION_SH_PATCH_URL}" ]; then
    curl "${INTEGRATION_SH_PATCH_URL}" -o "${INTEGRATION_SH_PATCH}"
    if [ -e "${INTEGRATION_SH_PATCH}" ]; then
      export INTEGRATION_SH_PATCH
@@ -107,6 +109,7 @@ if [ ! -z "${INTEGRATION_SH_PATCH_URL}" ]; then
      log "No integration sh patch"
    fi
 fi
+set -u
 git bisect 'start'
 git bisect 'bad' "${BAD_REVISION}"
 git bisect 'good' "${GOOD_REVISION}"
