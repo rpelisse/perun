@@ -50,7 +50,7 @@ git clone "${EAT_GITHUB_REPO}"  --branch "${EAT_GITHUB_BRANCH}" "${EAT_WORKSPACE
 cd "${EAT_WORKSPACE}"
 
 export EAT_EXTRA_OPTS="-Dversion.org.wildfly.openssl.wildfly-openssl-macosx-x86_64=1.0.6.Final-redhat-2 -Dtest=${TEST_NAME}"
-export HARMONIA_BUILD_SCRIPT="${HARMONIA_FOLDER}/eat-job.sh"
+export HARMONIA_BUILD_SCRIPT_NAME="eat-job.sh"
 
 bash -x ${HARMONIA_SCRIPT} "${EAT_MODE}" 
 log "Stop EAT testsuite"
